@@ -2,6 +2,7 @@
 
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
+use Log;
 
 class DownloadCalendar extends Command {
 
@@ -57,7 +58,7 @@ class DownloadCalendar extends Command {
         $url = explode('/', $this->argument('url'));
         $file = uniqid() . '_' . end($url);
         
-        $this->file = storage_path('download') . DIRECTORY_SEPARATOR . $file;
+        $this->file = storage_path('download/ukical') . DIRECTORY_SEPARATOR . $file;
         try {
             $response = $this->client->get($this->argument('url'), ['sink' => $this->file]);
             return true;
@@ -76,17 +77,20 @@ class DownloadCalendar extends Command {
         $valid = \DateTime::getLastErrors();
 
         if ($valid['warning_count'] != 0 && $valid['error_count'] != 0) {
-            error_log('Invalid date: ' . $term);
+            Log::error('Invalid date: ' . $term);
             return;
         }
 
-        if (file_exists(storage_path('download'))) {
+        if (file_exists(storage_path('download/ukical'))) {
             foreach (new DirectoryIterator(storage_path('download')) as $fileInfo) {
                 if (!$fileInfo->isDot() && time() - $fileInfo->getCTime() >= $past_time->getTimestamp()) {
+                    Log::info('Unlink: ' . $fileInfo->getRealPath());
                     unlink($fileInfo->getRealPath());
                 }
             }
         }
+
+        return true;
     }
 
 }

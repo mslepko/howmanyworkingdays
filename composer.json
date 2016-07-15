@@ -9,7 +9,7 @@
         "laravel/lumen-framework": "5.2.*",
         "vlucas/phpdotenv": "~2.2",
         "guzzlehttp/guzzle": "~5.3|~6.0",
-        "league/flysystem": " ~1.0"
+        "johngrogg/ics-parser": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

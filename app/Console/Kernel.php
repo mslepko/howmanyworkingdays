@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 use App\Console\Commands;
+use App\Console\Commands\DownloadCalendar;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,8 +15,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\DownloadCalendar::class
-    ];
+        Commands\DownloadCalendar::class,
+        Commands\ParseICSCalendar::class
+    ];  
 
     /**
      * Define the application's command schedule.
