@@ -11,6 +11,6 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->version();
+$app->get('/events/{$year}/{$month}', function ($year, $month) use ($app) {
+    return "Year: $year, month: $month";
 });
